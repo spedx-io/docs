@@ -1,9 +1,7 @@
 {
   "index": "Welcome to SpedX",
   "beyond-zdfs": "Extending Beyond ZDFs",
-  "market-maker": {
-    "title": "Market Maker"
-  },
+  "market-maker": "Market Maker",
   "about": {
     "title": "About",
     "type": "page"
