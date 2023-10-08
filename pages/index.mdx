@@ -1,11 +1,71 @@
+<img src="/docs-intro.jpg" height="100" />
+
 # Introduction
- 
-Welcome to Nextra! This is a basic docs template. You can use it as a starting point for your own project :)
 
-## What is Nextra?
+SpedX is a DEX being built on Solana that focuses on offering optimal liquidity, execution and best-in-class UX to it's traders.
 
-A **simple**, **powerful** and **flexible** site generation framework with everything you love from Next.js.
+## Why?
 
-## Documentation
+Imagine a scenario, you are a shitcoin trader on Ethereum, trading popular coins like $LINK, $WLD, $RLB, $LDO, etc on EVM DEXs.
+One day, a big NFT mint happens on the L1. Gas prices skyrocket. Even L2s feel the effect. At the same time, you spot a winning trade
+in a shitcoin. But the gas price is more than the notional value of your trade. You miss out on an obvious and money-making trade.
 
-The documentation is available at [https://nextra.site](https://nextra.site).
+We all have been through this experience. All of us, at some point in our lives have traded, or trade shitcoins. However, the inability of
+the EVM to facilitate smooth trading experiences acts as a limiting factor.
+
+Another problem is lack of consistent liquidity. Market makers typically hesitate to provide liquidity to derivatives of shitcoins, mainly
+due to non-uniform settlement. In perpetuals, settlement is not uniform, meaning that some people are left holding the bags at the last. Expiry future
+markets are not yet widely used in crypto, mainly due to the added complexity of long-term uncertain speculation.
+
+One could say that bridging of shitcoins to faster chains like Solana could be a solution. But, bridging is an extremely time consuming and expensive process.
+Bridges also have a history of exploits mainly due to the wrapping of assets. Speeding up the bridging process involves a certain level of centralization
+which is against the basic premise of blockchains, which is trust minimization.
+
+Lastly, even if one was to bridge their favorite shitcoins to faster chains like Solana and were to find a market for it,
+bad actors in the markets tend to manipulate the prices of perpetual contracts of illiquid shitcoins, and then farm funding rate rewards.
+This causes a disparity and inefficiency in the market where the Mark Price tends to be wacky most of the time, and traders are forced to trade at
+inefficient prices.
+
+## What?
+
+Thus, to solve the problem of slow and expensive chains, time-consuming bridging process, lack of market makers for liquidity and presence
+of bad actors manipulating thin markets, we are bringing forth a new instrument, known as Zero-day Futures that enable short-term, liquid margin trading
+of shitcoins, without the actual asset being on the chain itself, with no funding rates, and the contract design acting as an incentive to market makers.
+
+ZDFs portray the following features:
+
+- Enable short-term liquid margin trading of any underlying asset.
+- All ZDF contracts expire every 25 hours.
+- 24 hours is meant for trading, and the additional 1 hour is for settlement of contracts
+- There is no funding rate as all contracts settle to Index Price at expiry.
+- No bridging is required, as margin is paid and contracts settle in USDC.
+
+Advantages of ZDFs for Traders are:
+
+- No funding rate
+- No bridging requirement
+- Ability to access leverage by posting collateral
+- Despite manipulation risks, they incur guaranteed cash settlement at index price.
+
+Advantages of ZDFs for Market Makers are:
+
+- Ability to manage risk using advanced measures
+- Guaranteed settlement ensuring that they are not left with the bags at the end
+- Flexibility to settle to cash or roll over to the next contract depending on risks
+- Provide liquidity to the long tail of assets by leveraging at-the-money futures
+
+### Important Information
+
+ZDFs are the brainchilds of HxroNetwork. SpedX is a Hxro Ecosystem dApp and leverages its derivatives infrastructure to power ZDF trading.
+
+## Which ZDFs will be listed first?
+
+We are currently planning to list contracts for the following underlying assets:
+
+- FTT (Yes, you saw it right)
+- LUNA (Yes, you saw it right)
+- LDO
+- GMX
+- LINK
+- WLD
+- BITCOIN
