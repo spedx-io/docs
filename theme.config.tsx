@@ -622,7 +622,7 @@ export default {
       />
       <meta
         property="og:image"
-        content="/spedx-logo-2.png"
+        content="/public/spedx-logo-2.png"
       />
       <title>SpedX Docs</title>
 
@@ -634,7 +634,7 @@ export default {
       <meta name="twitter:creator" content="@spedxhq" />
       <meta
         name="twitter:image"
-        content="/spedx-logo-2.png"
+        content="/public/spedx-logo-2.png"
       />
       <meta
         name="twitter:description"
@@ -643,7 +643,7 @@ export default {
       <meta name="twitter:card" content="summary_large_image"></meta>
       <meta
         property="og:description"
-        content="The first light client for the Solana blockchain."
+        content="SpedX is a DEX focusing on liquidity, execution and UX."
       />
     </>
   ),
@@ -652,7 +652,7 @@ export default {
     return {
       additionalLinkTags: [
         {
-          href: "/spedx-logo-2.png",
+          href: "/public/spedx-logo-2.png",
           rel: "icon",
           sizes: "192x192",
           type: "image/png",
@@ -669,7 +669,7 @@ export default {
       openGraph: {
         images: [
           {
-            url: "https://res.cloudinary.com/dev-connect/image/upload/v1678962390/tdnewogimage_ayxxw5.png",
+            url: "/spedx-logo-2.png",
           },
         ],
       },
