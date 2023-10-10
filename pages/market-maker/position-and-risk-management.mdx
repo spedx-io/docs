@@ -7,11 +7,17 @@ This means that market makers would need to proactively manage these positions i
 The easiest way of doing so is holding when the situation is preferable and settling the positions for positive Unrealized PnL.
 However, what must be done when the conditions are unfavorable, i.e the market moves against a current position?
 
-We apply risk management practices and delta neutral frameworks here to ensure that all positions are delta-neutral and any
-loss incurred is thus minimized. Using settling periods and price thresholds, we make sure that positions are settled periodically
-and any positions with extreme PnL are settled in advance.
+We apply risk management practices such as price intervals and thresholds. Meaning that, all open positions are settled at frequent intervals
+in order to settle positive unrealized PnL and not hold any position for too long.
 
-Thus, by limiting losses and simultaneously mitigating them using delta-neutral frameworks, we ensure profitability at all times.
+We will also be introducing dedicated logic to create more orders on the side of the orderbook that is set to receive funding payments,
+than pay funding. Orders on the other side of the book will be unchanged, including their quantity. Only the quantity of orders on the receiving
+side of the book will be marginally increased.
 
 In order to monitor existing position's PnL, we use tick-by-tick and extremely fast read-writes from databases to make sure decision-making
 is not delayed.
+
+# References
+
+- [Position Settlement Logic](/position-and-risk-management)
+- [Funding Rate Management](/funding-rate)
