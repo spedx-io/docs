@@ -1,0 +1,11 @@
+# Funding Rate
+
+Funding rates in perpetuals are used to align the mark price of the perpetual contract with the index price. However, when
+market making, we might have positions that may require us to pay funding rates. This may lead to us losing a sizeable chunk
+from the total APR we can offer to our LPs. Thus, the market maker is inclined to create more orders on that side of the book
+that is set to recieve funding for the current period. The orders on the side of the book that pays funding are left unchanged.
+Meaning that, only the quantity of orders on the receiving side of the book are increased, whereas the quantity of orders of the
+paying side of the book remain constant.
+
+This is to ensure that the liquidity on one side of the book remains constant despite the inclination of the market maker to offset
+a part of outgoing funding with incoming funding.
