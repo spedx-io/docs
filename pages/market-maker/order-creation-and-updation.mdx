@@ -1,0 +1,19 @@
+# Order Updation
+
+We utilize tick data of the market to not only make trading decisions, but also for the process of updating existing orders,
+in order to either:
+
+- Updating Pricing(see [Price Generation](/price-and-spread-generation#price-aggregation-and-weightage))
+- Updating Spreads(see [Spread Generation](/price-and-spread-generation#spread-generation))
+
+## Why tick data?
+
+Financial markets move way too fast for manual human labour. Rapid computerization of trading has made human intervention redundant.
+But is also requires algorithms to keep up with the market every few milliseconds, making it way hard for humans. We make use of tick
+data to monitor the markets we are providing liquidity to, as well as other market whose data we are aggregating.
+
+# Order Creation
+
+We make sure that the number of orders are at par with the number of open positions. At start, the market maker has a few open orders
+upto a specific spread, and no open positions. When the orders start getting filled, it starts creating more orders that scale semi-proportionately
+with the number of open positions.
