@@ -2,6 +2,8 @@
   "index": "Welcome to SpedX",
   "beyond-zdfs": "Extending Beyond ZDFs",
   "market-maker": { "title": "Market Maker" }, 
+  "yield-avenues": "Yield Avenues",
+  "trading-vaults": "Trading Vaults",
   "about": {
     "title": "About",
     "type": "page"

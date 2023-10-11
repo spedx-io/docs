@@ -1,0 +1,45 @@
+# Trading Vaults
+
+Trading vaults are an extension of [Yield Avenues](/yield-avenues). One can think of them as a permissionless version of Yield Avenues,
+wherein anyone can create their own vault, garner deposits purely based on their strategy and performance(PnL), and trade on SpedX with the
+thus deposited money.
+
+Similar to Yield Avenues, depositors earn profit made as per the pro-rata share of their deposits in the vault. Everything is
+permissionless starting from vault creation, deposits, vault management and using the funds to trade. In short, you can become the fund
+manager you've always wanted to become, but on a micro level. However, the protocol enforces some minimum constraints in order to prevent
+stealing of funds by the vault creator / depositors(withdrawing excess of what they deposited + profit or loss).
+
+## Vault creation
+
+Anyone that is connected to SpedX, and has a TRG(see [Accounts](/dex-concepts/accounts) for more) created already can create a trading vault of their own.
+And, to ensure skin in the game and accountability, the share of the vault owner in the total vault must always be at a minimum of 10%. Meaning that,
+he who is creating a vault is not only the vault leader / fund manager, but also a micro depositor in it. And if the vault leader tries
+to withdraw capital from the vault that puts his share of the vault below 10%, the action would be voided.
+
+## Vault management
+
+Trading vaults are fully permissionless meaning that vault leaders / fund managers are free to use these in funds in any form of trading activities,
+with no restriction from the protocol-side. Meaning that, a vault leader can run market making strategies, directional strategies, liquidator strategies,
+or any strategy that he wishes to do.
+
+## Protocol-enforced constraints
+
+The only constraint enforced by the protocol is the withdrawal of deposited assets, in order to ensure that the vault leader, driven by his
+malicious motivations, does not steal user funds, or a user does not withdraw amount in the excess of principal amount + profit/loss.
+
+## Algorithmic trading
+
+Traders / vault leaders will be provided with algorithmic access to the trading vault, that they can use to link with their algorithmic trading strategy.
+Meaning that, traders can algorithmically deposit funds into a TRG(see [Accounts](/dex-concepts/accounts) for more) and trade with the deposited money.
+
+## UI-based trading
+
+As a fund manager / vault trader would typically have a TRG specially dedicated for the trading vault while trading algorithmically, the same applies
+to using the vault funds to trade via SpedX UI. Meaning that, the way TRGs need a pubkey acting as the depositor / withdrawer to the TRG, the trading vault would
+act as the depositor and withdrawer to the TRG using which the vault leader would trade using vault money. Thus, whenever a trader
+creates their own trading vault, the protocol automatically creates a TRG linked with the trading vault for deposit and withdrawal purposes.
+
+## Dissolution of a vault
+
+A trader may choose to dissolve / end their trading vault irrespective of the reasons. In such a scenario, all of the user deposits + any profit/loss
+are withdrawn automatically and distributed back to the vault depositors. The vault manager does get to keep his share of the vault, though.

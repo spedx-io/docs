@@ -1,0 +1,39 @@
+# SpedX Yield Avenues
+
+SpedX will be utilizing a bunch of yield avenues, in order to attract idle liquidity that typically rests on AMMs.
+The main idea is for the users to deposit into initiatives such as the [Market Maker](/market-maker), [Liquidator Client](/liquidators) and the [Insurance Fund](/insurance-fund)
+and capture yield according to their pro-rata share in the total pool.
+
+## How do Yield Avenues work?
+
+Users can access Yield avenues, which in simpler terms can be thought of as capital vaults run and maintained by SpedX, from the SpedX UI itself.
+To access yield avenues and deposit liquidity, head over to [zdfs.spedx.exchange/yield](zdfs.spedx.exchange/yield). Choose the specific
+vault that you want to deposit to[Work-In-Progress, not live yet], connect your wallet, select the desired amount and click on deposit.
+That amount is then deposited to the respective vault, and the protocol on the backend records your pro-rata share of the vault as well as
+the profit growth(which initially is nil).
+
+## How does profit distribution work?
+
+Users receive a share of the profit according to their pro-rata share of the vault. When they try to withdraw their funds, they receive the initial principal
+amount + any profit made or loss incurred. When they deposit initially, the profit growth would be nil. Proceeding that, the underlying algorithm
+utilizes the newly deposited funds for the activity it performs(market making, liquidating or insuring collateral). Results from these activities
+whether profit or loss is reflected in the UI. The underlying algorithms tend to recycle the profit made from operations, so the profit growth is compounded
+by definition. The APR/APY shown in the UI represents the profit growth obtained by the algorithm in it's operations. Note that profit growth
+can be either negative or positive, depending on the strategy, risk, and the market condition that the algorithm is operating in.
+
+## Insurance Fund -- The exception
+
+One of the yield avenues that SpedX exposes a protocol-run vault is the Insurance Fund. In short, the SpedX Insurance Fund covers
+collateral / bad debts of positions that otherwise could not be liquidated / covered by liquidators. Thus, it makes sure that all positions
+remain fully backed / covered.
+
+But, it is worth to notice that the Insurance Fund by definition does not make money from it's operations. So you might ask, how does it
+pay its depositors? Depositors depositing into the Insurance Fund vault get a share of the fees collected by SpedX from it's exchange activities.
+Currently, SpedX charges 0bps for maker orders and 5bps for taker orders(see [Fees](/dex-concepts/fees) for more information), all of which flows to HxroNetwork
+and $HXRO stakers. Additionally, we will implement a fee(1-2bps, see [Fees](/dex-concepts/fees) for more information) on top of the base taker
+fee which will flow to SpedX, using which we will fund Insurance Fund yield payoffs.
+
+For more details on the Insurance Fund and the risks associated to depositing in that specific yield avenue, check out
+[Insurance Fund](/dex-concepts/insurance-fund).
+
+For permissionless creation of Yield Avenues, check out [Trading Vaults](/trading-vaults)
