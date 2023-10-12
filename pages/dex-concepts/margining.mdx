@@ -1,0 +1,17 @@
+# How does Margining work on HxroNetwork / SpedX?
+
+HxroNetwork Dexterity is a cross-margined derivatives orderbook, however in a different and realistic fashion.
+Meaning that, margining on HxroNetwork is quite similar to how margining works in TradFi derivatives. Unlike allowing
+traders to choose the leverage multiple at which they lever up, HxroNetwork pre-determines initial margin requirements
+and thus the leverage using the volatility of the underlying portfolio. The formula for determining initial margin is
+`3 * 1d_standard_deviation * order_size`
+
+Using such a margining method, HxroNetwork's risk engine ensures that a portfolio with a basket of volatile assets gets allocated
+higher initial margin requirements and ultimately low leverage. This method is also suitable for more stable portfolio baskets like forex,
+and thus HxroNetwork and ultimately SpedX can even offer Forex products with initial margin requirements as less as 0.1%(1000x leverage),
+without posing significant risks to the protocol, because forex is a relatively stable asset basket.
+
+# Important formulae
+
+- Initial margin: `3 * 1d_standard_deviation * order_size`
+- Maintenance margin: `3/2 * 1d_standard_deviation * order_size`

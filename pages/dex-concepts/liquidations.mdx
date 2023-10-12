@@ -1,0 +1,14 @@
+# How do Liquidations work on SpedX?
+
+Liquidations on SpedX / HxroNetwork work similar to other exchanges and is tied to margin. Liquidations occur when collateral posted
+by a trader devalues / position overleverages. With regards to margining on Hxro, traders can either be in a healthy state, unhealthy state
+or in a liquidateable state.
+
+When the margin value of a trader's position equals `3 * 1d_standard_deviation * order_size`, the trader's position is known to be a in a healthy state.
+If the margin value of a trader's position is less than `3 * 1d_standard_deviation * order_size` but more than `3/2 * 1d_standard_deviation * order_size`,
+the position is known to be in a unhealthy state. When the margin value of a trader's position is less than `3/2 * 1d_standard_deviation * order_size`,
+the position is known to be in a liquidateable state.
+
+Positions that are in a liquidateable state are open to be liquidated by liquidators. Anyone can be a liquidator by running specific scripts
+that scan through all accounts present on the DEX, and finds those that are in liquidateable state, and then proceeds to liquidate them. Please do
+note that liquidating also requires depositing margin, so liquidator accounts must be funded too.

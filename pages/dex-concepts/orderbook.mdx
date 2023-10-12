@@ -1,0 +1,25 @@
+# Orderbook
+
+As a HxroNetwork ecosystem dApp, we utilize their Dexterity Orderbook. Dexterity is not your normal limit orderbook.
+Dexterity is an Asset Agnostic Limit Orderbook with aggregated liquidity. This means that asset of any nature can be issued
+as a MPG(see [MPG](/mpg)) on HxroNetwork.
+
+## What kind of aseets can one issue on HxroNetwork?
+
+The aim of HxroNetwork is making listing of MPGs and ultimately new markets fully permissionless. The only requirement for listing
+a new market is the presence of an oracle(Pyth Network, Switchboard or Custom) fetching the Index Price for a market.
+
+Even assets such as forex and commodity derivatives can be issued on HxroNetwork thanks to it's Asset Agnostic Orderbook provided there
+is an oracle providing constant price updates for the underlying asset.
+
+## What is Aggregated Liquidity?
+
+Think of DEX A and DEX B, both having their individual Orderbooks to support trading. Liquidity in such markets is fragmented, meaning
+that order flow is tightly split into either DEX A or DEX B. More the number of DEXs, more the fragmentation of liquidity. Liquidity
+fragmentation may also be directly linked to the rise of arbitrageurs and high-frequency traders primarily arbitrating between markets millions
+of times in a day and earning the spread.
+
+You might say aggregators like 1inch and Jupiter do the job, right? Such aggregators mostly act like order routes more than liquidity
+aggregators, because liquidity is still not shared even with aggregators. In true aggregated liquidity, order flow on DEX A can access
+liquidity on DEX B, thus ensuring seamless compatibility between DEXs, and no fragmentation. The only requirement here is, though,
+that both DEX A and B must be built on the same layer that allows sharing of liquidity.

@@ -1,0 +1,31 @@
+# Insurance Fund
+
+The SpedX Insurance Fund acts as a Backstop mechanism to handle over-levered positions with exceeding liability.
+The Insurance Fund is responsible in covering any bankrupt positions.
+
+## What are Bankrupt Positions?
+
+Bankrupt positions are those positions who are extremely over-leveraged and their size is too much for a liquidator to handle.
+Liquidators are also required to deposit margin in order to fulfil the initial margin requirements of the liquidated positions.
+More the size, more the initial margin requirements. Thus, many liquidators will not be able to liquidate large positions because
+of their inability to post sufficient margin. In such case, positions are declared as bankrupt.
+
+Positions can be declared bankrupt also during volatile market conditions when positions may not be liquidated in time and their
+real time balance goes below 0(i.e losses are greater than margin posted)
+
+## What does the Insurance Fund do?
+
+The Insurance Fund is used to pay off liabilities(losses) when the balances of the positions of the user goes below 0, and liquidators
+are not able to liquidate those positions. In such a case, the Insurance Fund pays off those liabilities and ensures that users with
+positive PnL insured. Thus, the Insurance Fund can be thought of an Insurance for the users with positive PnL when users with negative PnL
+are not able to pay off their liabilities.
+
+Every market has a limit upto which the Insurance Fund can cover the liabilities for a bankrupt position.
+
+## How is the Insurance Fund funded?
+
+The Insurance Fund is funded through deposits from users as well as the protocol. Users can stake their idle capital into the
+Insurance Fund and can earn a portion of the liquidation penalties and trading fees. This capital is used to collateralize the liabilities
+that the Insurance Fund will cover in case of bankrupt positions.
+
+Currently, we have Insurance Fund denominated in USDC only, as collateral is accepted in USDC, and exchange fees are collected in USDC.

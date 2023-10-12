@@ -1,0 +1,17 @@
+# Liquidators
+
+Liquidators are that segment of the market which take over over-levered positions and sell them in the open market.
+In the context of [Liquidations](/dex-concepts/liquidations), positions deemed healthy and unhealthy will not be liquidated.
+
+Liquidators only liquidate those positions whose margin levels are below the maintenance margin levels, i.e liquidateable positions.
+Liquidators earn rewards from liquidated collateral after every progressive liquidation. Liquidators liquidate positions in an algorithmic
+fashion by looping through a list of accounts and finding those accounts whose health is deemed to be liquidateable. Then,
+they take over all of those derivatives positions which are unhealthy and liquidate them. After liquidating them, liquidators receive
+an asset at a discount as stated previously.
+
+Please do note that liquidators also need to have TRGs setup and most have sufficient collateral in order to satisfy the initial margin
+requirements of the inherited liabilities(liquidated positions). Also, liquidations always happen at the Oracle Price and not at the Mark Price
+in order to prevent false and wacky prices being used to liquidate users.
+
+If the liquidator is not able to handle the size of the liabilities, i.e he does not have sufficient margin, the positions are declared
+to be bankrupt and the [Insurance Fund](/dex-concepts/insurance-fund) takes over them.

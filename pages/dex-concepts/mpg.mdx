@@ -1,0 +1,14 @@
+# Market Product Groups (MPGs)
+
+MPGs or Market Product Groups on HxroNetwork refer to a group of products that can be accessed via the MPG. Think of MPG A hosting
+blue-chip perpetual contracts, whereas MPG B hosting altcoin ZDFs. To trade perpetuals, let's say, a trader account, would first have to connect
+with the required MPG and then access the various products / markets to trade. Also, a trader account is directly linked to an MPG, and hence
+cannot be used for any other MPG. For example, if a trader has created an account to trade perpetuals on MPG A, he cannot use the same account to trade
+ZDFs on MPG B. To do so, he would have to create another account.
+
+The same also applies for dApps like us building on Hxro. dApps have to connect with a specific MPG to offer products listed on that MPG.
+For example, to offer perpetuals, a Hxro ecosystem dApp would have to connect via code with the desired MPG that consists of perpetuals.
+
+In practice, MPGs may or may not be differentiated based on the products they list, as an MPG may also host perpetuals and expiry futures
+and ZDFs as well. For specific use-cases, such as forex and commodity derivatives, one may also desire to create their own MPG with custom risk
+parameters provided to the HxroNetwork risk engine.

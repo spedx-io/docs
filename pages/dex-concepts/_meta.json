@@ -1,0 +1,13 @@
+{
+    "orderbook": "Orderbook",
+    "mpg": "MPG", 
+    "trg": "TRG",
+    "margining": "Margining",
+    "collateral": "Collateral",
+    "fees": "Fees",
+    "liquidations": "Liquidations",
+    "liquidators": "Liquidators",
+    "pnl": "PnL",
+    "oracles": "Oracles",
+    "risk-management": "Risk Management"
+}

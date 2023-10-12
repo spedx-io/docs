@@ -1,0 +1,53 @@
+# Risk Management
+
+Risk Management is a crucial aspect with relation to derivatives in order to ensure that the protocol is always safe and resistant
+from economic manipulation. One of the major steps taken in risk management by HxroNetwork is to ensure that too much of Unrealized PnL
+cannot be used to post collateral, and too much of collateral cannot be withdrawn. Let's go over on how they achieve this.
+
+## Capping Unrealized PnL
+
+As understood from [Margining](/dex-concepts/margining), Unrealized PnL is counted as collateral for new positions just as USDC is(USDC is the only supported
+form of collateral as of now, see [Collateral](/dex-concepts/collateral) for more information), the HxroNetwork risk engine ensures that too much of Unrealized PnL
+cannot be withdrawn. The margin requirement ensures that when a trader is wanting to add to a profitable position, the margin requirement increases
+with increase in size too. This would decrease the Unrealized PnL that can be withdrawn after increasing the position size. Why?
+Because the Unrealized PnL before was counted as margin while adding to the position, hence decreasing the amount of new Unrealized PnL
+after adding to the position.
+
+## Orderbook marking
+
+This risk management mechanism ensures that excess collateral cannot be withdrawn against positions that cannot be traded out.
+Let's take an example to understand this. Suppose you longed the ZDF instrument SOL0D101322, which indicates the ZDF instrument for SOL.
+Let's also assume that this position requires $250 worth of margin. In cases when you want to exit your position, the risk engine looks
+at the Orderbook for bids for the amount of units of the instrument that you hold. Suppose the amount of bids for n units of SOL0D101322
+that you hold is $500. This means that you would only be able to withdraw enough such that you receive $500 and not $250. In cases where the bids
+for n units of that instrument is less than $250, you are still required to hold that $250.
+
+The basic idea of doing this is to ensure that traders should not be able to withdraw Unrealized Pnl from positions that they can't fully close
+otherwise.
+
+## OI Caps
+
+These Open Interest thresholds / caps are imposed at the TRG(see [TRG](/dex-concepts/trg)) level. Orders from a TRG would be blocked
+if they ever breach a certain Open Interest threshold. These thresholds dont kick in until Open Interest on the overall contract reaches a specific
+level. This is done in order to prevent the risk engine from classifying orders that normally do not prevent whale risk, but are relatively large with
+respect to the contract's OI because the contract has just opened.
+
+## Price bands
+
+Price bands are used by the HxroNetwork risk engine in order to protect the users from market manipulation and from volatile events.
+By definition, if the mark price of the market breaches a certain limit of the oracle's[see [Oracle](/dex-concepts/oracle) to see how we use Oracles]
+TWAP, the market will prevent orders from filling until the mark price reverts within this band.
+
+## Minimum cumulative order depth
+
+Cumulative order depth minimum is a mechanism to calculate the mark price of a market. This is done in order to ensure that mark price
+calculations are more conservative in thin markets wherein prices stay wacky almost always. Relaxation is given to markets with much more depth
+as a culmination of diverse buyers and sellers ensures that the chances of price staying wacky is less probable.
+
+## Required Minimum size
+
+HxroNetwork's risk engine uses a parameter known as Minimum required order size, which requires traders and market makers to have their order sizes
+above the limit set by the risk engine. This prohibits anyone from putting small, stale orders on the book in order to garner information from inbound
+order flow that can be used on other venues for the purposes of frontrunning and arbitrage.
+
+## Spread to Index EMA
