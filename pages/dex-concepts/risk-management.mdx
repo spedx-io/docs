@@ -4,7 +4,45 @@ Risk Management is a crucial aspect with relation to derivatives in order to ens
 from economic manipulation. One of the major steps taken in risk management by HxroNetwork is to ensure that too much of Unrealized PnL
 cannot be used to post collateral, and too much of collateral cannot be withdrawn. Let's go over on how they achieve this.
 
-## Capping Unrealized PnL
+## Mark Pricing
+
+The Last-Trade-Price i.e the LTP of the Orderbook does not influence calculation of the Mark Price. The Mark Price for a market is calculated
+by taking the Index Price(Spot price of the underlying asset calculated via [Oracles](/dex-concepts/oracles)) and applying an EMA of a spread to it.
+This spread is calculated as the difference between the Index Price and the Mid Price of the derivative instrument. This allows the Mark Price to move around
+the Index Price but prevents the variable spread from moving too quickly in the event that traders try to manipulate the price on the instrument.
+See [Spread Calculation](/dex-concepts/risk-management#midpoint-index-spread-calculation) on how the exponentially weighted spread is calculated.
+
+## Midpoint Index Spread Calculation
+
+One of the major problems if you've observed keenly in the calculation of the [Mark Price](/dex-concepts/risk-management#mark-pricing) is low liquidity.
+One can easily manipulate low liquidity markets and still influence the mark price calculation, although not as much as when the mark price was influenced by the
+Last-Trade-Price. To address this, the HxroNetwork risk engine does not simply consider the top of the book bids and asks for the calculation of the Orderbook Mid Price.
+For context, the Orderbook Mid Price is calculated as best_bid / 2 + best_ask / 2. For calculation of the mid price which in-turn is used in calculation of the
+spread and the mark price, there needs to be a Qualifying Market. For there to be a qualifying market, the cumulative bids and the cumulative asks
+must be within a band of each other and should add up to equal to or more than a minimum size threshold.
+
+In reality, the mid point price used in the calculation of the spread and the mark price is the mid point of the best bid and ask prices when both the above conditions
+are met. This also prevents from bad actors putting small orders on the book in order to extract information from order flow, take basically no risk
+and end up influencing the mark price.
+
+What happens if the band between the cumulative bids and asks is too wide or the size doesn't add up to the required threshold? Simply, the exponentially
+weighted spread of the Index Price and the Mark Price stays constant from the last time there was a qualifying market.
+
+For example, assume that the price of the BTCUSD asset fetched from Pyth oracles is $25,000. And the Orderbook mid price reflects a price of
+$25,250. If the price moves dramatically such that either the orders on the top of the book get filled or market makers remove their quotes such that the price
+rises to $30,000. In such case, there would be no Qualifying market and the new mark price will be $30,250, reflecting the spread while the market will still liquid(at $25,000
+levels).
+
+### Update frequency of the Spread
+
+The update frequency of the spread is dependent on the MPG activity and not actual clock time. There is also a threshold of 1 update to the spread per block.
+This ensures that the spread does not update too fast allowing anyone to keep posting higher bids or lower asks progressively before allowing other traders to trade
+against those orders and influence the mark price that way. In theory, the spread between the Index price and Mid price is seen to be way more stable than
+the mark price itself, because of the Index Price component fetched from a liquid market.
+
+But, the spread can update much slower in practice than the 1 block standard if the order actions are updating very infrequently.
+
+## Capping Unrealized PnL while adding margin
 
 As understood from [Margining](/dex-concepts/margining), Unrealized PnL is counted as collateral for new positions just as USDC is(USDC is the only supported
 form of collateral as of now, see [Collateral](/dex-concepts/collateral) for more information), the HxroNetwork risk engine ensures that too much of Unrealized PnL
@@ -13,17 +51,27 @@ with increase in size too. This would decrease the Unrealized PnL that can be wi
 Because the Unrealized PnL before was counted as margin while adding to the position, hence decreasing the amount of new Unrealized PnL
 after adding to the position.
 
-## Orderbook marking
+## Orderbook Marking for Unrealized PnL
 
-This risk management mechanism ensures that excess collateral cannot be withdrawn against positions that cannot be traded out.
-Let's take an example to understand this. Suppose you longed the ZDF instrument SOL0D101322, which indicates the ZDF instrument for SOL.
-Let's also assume that this position requires $250 worth of margin. In cases when you want to exit your position, the risk engine looks
-at the Orderbook for bids for the amount of units of the instrument that you hold. Suppose the amount of bids for n units of SOL0D101322
-that you hold is $500. This means that you would only be able to withdraw enough such that you receive $500 and not $250. In cases where the bids
-for n units of that instrument is less than $250, you are still required to hold that $250.
+This specific logic governs withdrawals that are aimed at protecting the system. While cash balance and available margin are calculated
+using the mark price, someone cannot simply withdraw excess Unrealized PnL from an open position unless they are able to trade out of the
+position given the current bids or asks. Supposing that a user has a long position on a derivative, there must be sufficient buyers for the position
+for the user to withdraw his Unrealized PnL made from the position. In case the user has a short position, there must be sufficient sellers for the position
+for the user to withdraw his Unrealized PnL made from the position.
 
-The basic idea of doing this is to ensure that traders should not be able to withdraw Unrealized Pnl from positions that they can't fully close
-otherwise.
+This mechanism can be thought of as a system accounting for price impact. In case that the user's position cannot be exited fully due to lack of liquidity
+on the other side i.e the market impact exceeds the required margin on the position, they cannot withdraw the Unrealized PnL, but just get to keep the deposited
+margin and abandon the position.
+
+Another way to think about this mechanism is protection against bad mark prices, because cash balance and margin are calculated using the current
+mark price. Hence, in order for preventing traders to exploit the system when the mark prices stay wacky for a period, this system proves effective.
+Why? When a group of highly capitalized traders try to withdraw excess PnL from a position that has been marked ineffectively to a wacky price,
+there is bound to be market impact preventing traders from withdrawing PnL and enabling withdrawals of only the required margin on the position.
+
+Let's take a practical example to understand this. A trader longed BTCUSD-PERP of quantity 1 and mark price of $25,000. The mark price increases
+to $50,000. He put up margin of $3k(leverage = ~8x). The cumulative best bid for 1 BTCUSD-PERP on the orderbook was $40,000. In normal scenarios,
+the exchange would allowed the trader to withdraw PnL of $22,000($50,000 - $25,000 - $3,000). HxroNetwork Dexterity would only allow PnL withdrawals upto
+$15,000($40,000 - $25,000), and not the typical full PnL of $22,000 at that instant.
 
 ## OI Caps
 
@@ -34,20 +82,7 @@ respect to the contract's OI because the contract has just opened.
 
 ## Price bands
 
-Price bands are used by the HxroNetwork risk engine in order to protect the users from market manipulation and from volatile events.
-By definition, if the mark price of the market breaches a certain limit of the oracle's[see [Oracle](/dex-concepts/oracle) to see how we use Oracles]
-TWAP, the market will prevent orders from filling until the mark price reverts within this band.
-
-## Minimum cumulative order depth
-
-Cumulative order depth minimum is a mechanism to calculate the mark price of a market. This is done in order to ensure that mark price
-calculations are more conservative in thin markets wherein prices stay wacky almost always. Relaxation is given to markets with much more depth
-as a culmination of diverse buyers and sellers ensures that the chances of price staying wacky is less probable.
-
-## Required Minimum size
-
-HxroNetwork's risk engine uses a parameter known as Minimum required order size, which requires traders and market makers to have their order sizes
-above the limit set by the risk engine. This prohibits anyone from putting small, stale orders on the book in order to garner information from inbound
-order flow that can be used on other venues for the purposes of frontrunning and arbitrage.
-
-## Spread to Index EMA
+Price bands can be specified as a spread around the current mark price of the asset. It prevents anyone from placing orders that are considered
+too wide from the current mark price. The width here is dictated by the spread. Wider the spread, wider the price bands and less conservative the system
+is for orders that may be wide enough from the mark price. In the inverse, thinner the spread, thinner the price bands and more conservative the system
+is for orders that may be wide enough from the mark price.
