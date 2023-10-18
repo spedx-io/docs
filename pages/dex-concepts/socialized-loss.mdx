@@ -1,3 +1,21 @@
 # Socialized Loss
 
-More details on how Socialized Loss is implemented will be shared in the coming weeks.
+Socialized Loss is an Anti-deleveraging mechanism where excess losses sustained on the platform are socialized across
+the positions of all users. For derivatives traders, losses are distribured based on the pro-rata amount of all their open
+positions. Meaning that, more the position value, including Unrealized PnL, more of the socialized loss will be allocated to that
+position.
+
+This ensures that even though a socialized deleveraging process happens, positions with relatively small positive PnL or small
+negative PnL are not shoved to the boundaries of liquidation.
+
+## When will Socialized Loss take place?
+
+Socialized Loss only occurs when the levered losses sustained within a particular market are greater than the liquidity in the
+market's Insurance Fund. Another way to think of this is Socialized Loss takes place if the deleveraging process carried out by the
+Insurance Fund is not enough to ease the liabilities of overleveraged positions.
+
+## Note
+
+Socialized Loss is specific to a market. Meaning that, if there is excess bad debt in the BTCUSD-PERP market, such that even the Insurance
+Fund cannot delever it, losses will be Socialized. But, this process would only be specific to traders having positions in the BTCUSD-PERP market.
+So if anyone is trading the ETHUSD-PERP market in the above example, they will not be affected by this process.

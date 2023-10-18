@@ -1,19 +1,27 @@
 # Insurance Fund
 
-The SpedX Insurance Fund acts as a Backstop mechanism to handle over-levered positions with exceeding liability.
-The Insurance Fund is responsible in covering any bankrupt positions.
+An Insurance Fund acts as a solvency net for the protocol in the event of any bankrupt positions. Many a times, positions
+may not be liquidated in time at their liquidation price and/or liquidators may not have enough capacity to liquidate them.
+In such cases, the cash balance of these accounts falls below 0, meaning that sustained loss is more than the margin deposited.
+
+The Insurance Fund then steps into pay off these liabilities and ensures that the protocol is liquid enough at all times in order
+to pay out profitable positions.
 
 ## What are Bankrupt Positions?
 
-Bankrupt positions are those positions who are extremely over-leveraged and their size is too much for a liquidator to handle.
-Liquidators are also required to deposit margin in order to fulfil the initial margin requirements of the liquidated positions.
-More the size, more the initial margin requirements. Thus, many liquidators will not be able to liquidate large positions because
-of their inability to post sufficient margin. In such case, positions are declared as bankrupt.
+Bankrupt Positions are those positions which have negative cash balance, indicating higher negative Unrealized PnL than the margin that
+the account(for cross margin) or the position(for isolated margin) has deposited. Such cases arise mostly because these positions were not
+liquidated in time at their zero price(liquidation price) and/or liquidators may not have enough capacity to liquidate them.
 
-Positions can be declared bankrupt also during volatile market conditions when positions may not be liquidated in time and their
-real time balance goes below 0(i.e losses are greater than margin posted)
+## How does the Insurance Fund operate?
 
-## What does the Insurance Fund do?
+As stated before, the Insurance Fund acts as a solvency net for the protocol by paying off excess liabilities of bankrupt positions
+and ensuring that there is enough liquidity to pay off profitable positions. The Hxro Network has implemented an Insurance Fund mainly
+denominated in USDC to cover the liabilities of bankrupt positions.
 
-More information on the workings of the Insurance Fund, the currency denominated in, etc, will be posted soon, as well as
-[Socialized Loss](/dex-concepts/socialized-loss)
+Margin currently is posted in USDC(see [Collateral](/dex-concepts/collateral)) and Exchange Fees are collected in USDC too(
+see [Fees](/dex-concepts/fees)). Hence, the Insurance Fund is denominated in USDC as well. This USDC Insurance Fund is then used to pay off
+liabilities in USDC.
+
+Currently, users **CANNOT** deposit into the Hxro Network Insurance Fund yet. Thus, by default, all Insurance Funds on Hxro Network
+are Isolated and not open for the public to deposit, and are funded exclusively using premiums.
