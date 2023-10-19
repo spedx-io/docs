@@ -1,14 +1,33 @@
 # How do Liquidations work on SpedX?
 
-Liquidations on SpedX / HxroNetwork work similar to other exchanges and is tied to margin. Liquidations occur when collateral posted
-by a trader devalues / position overleverages. With regards to margining on Hxro, traders can either be in a healthy state, unhealthy state
-or in a liquidateable state.
+Liquidations on HxroNetwork / SpedX work similar to other exchanges and are tied to margin. Hxro Network determines health of an account
+using the following three ways:
 
-When the margin value of a trader's position equals `3 * 1d_standard_deviation * order_size`, the trader's position is known to be a in a healthy state.
-If the margin value of a trader's position is less than `3 * 1d_standard_deviation * order_size` but more than `3/2 * 1d_standard_deviation * order_size`,
-the position is known to be in a unhealthy state. When the margin value of a trader's position is less than `3/2 * 1d_standard_deviation * order_size`,
-the position is known to be in a liquidateable state.
+- If the margin required for the position is above the threshold of `3 _ 1d_standard_deviation _ order_size\*, the account is considered to be
+  extremely healthy.
+- If the margin required for the position is exactly at the of `3 _ 1d_standard_deviation _ order_size\*, the account is considered to be
+  healthy.
+- If the margin required for the position is below the threshold of `3 * 1d_standard_deviation * order_size*, but above the threshold of
+`3/2 _ 1d_standard_deviation _ order_size`, the account is considered to be unhealthy.
+- If the margin required for the position is below the threshold of `3/2 * 1d_standard_deviation * order_size`, the account is considered to be
+  liquidateable.
 
-Positions that are in a liquidateable state are open to be liquidated by liquidators. Anyone can be a liquidator by running specific scripts
-that scan through all accounts present on the DEX, and finds those that are in liquidateable state, and then proceeds to liquidate them. Please do
-note that liquidating also requires depositing margin, so liquidator accounts must be funded too.
+When the margin levels of an account dips below the `3/2 _ 1d_standard_deviation _ order_size\*, the account is open for liquidation by liquidators.
+Here is what may happen to your account once it is open for liquidation.
+
+- If you have any open orders, they will be cancelled first. This ensures that any margin taken up by these set of orders is freed up and re-used for
+  the liquidateable positions, thus potentially preventing them from getting liquidated. Please do note that you will not be able to send any more orders
+  during this process that may take up more margin thus increasing the risk of liquidation even further. You are able to send new orders again
+  once open orders have been cancelled and freed up margin has been added to liquidateable positions.
+- However, if the margin is still below the maintenance margin requirements of the user's postiions, positions are eligible to be liquidated
+  by liquidators by sending a liquidation instruction. Learn more on how Liquidators function [here](/dex-concepts/liquidators). Liquidators specify
+  a specific TRG to liquidate, the market and the size to be liquidated. Upon a successful execution of the liquidate instruction, the liquidator will trade
+  with the liquidatee the positions to liquidate, at the _Index Price_ of the market at the time. For liquidating, the liquidator receives a fixed % of the
+  liquidatee's collateral put up for maintenance margin as a reward.
+
+## How to be safe from Liquidations?
+
+Liquidations are a feature of sharp market movements and volatility. Although Hxro Network and SpedX try to mitigate risks of market manipulation and sudden
+wicks within the protocol causing unfair liquidations by using the Index Price to dictate liquidations and not the Mark Price, there is always a chance of underlying
+market volatility especially in long-tail markets. Thus, always be vigilant while trading leveraged products such as Perpetuals and ZDFs!
+Always manage your risks using stop-loss orders and ensuring there is enough margin available and you are not overleveraging beyond your appetite

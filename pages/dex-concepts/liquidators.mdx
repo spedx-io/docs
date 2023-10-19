@@ -1,17 +1,26 @@
 # Liquidators
 
-Liquidators are that segment of the market which take over over-levered positions and sell them in the open market.
-In the context of [Liquidations](/dex-concepts/liquidations), positions deemed healthy and unhealthy will not be liquidated.
+Liquidators are that segment of the market that free the protocol from potential bad-debt. The protocol allows traders and users
+to open leveraged positions on derivatives products such as Perpetuals. This has many implications for the protocol, such as excess negative
+Unrealized PnL devaluing the margin such that the positions become bankrupt and the protocol is left to pay for this bad-debt.
 
-Liquidators only liquidate those positions whose margin levels are below the maintenance margin levels, i.e liquidateable positions.
-Liquidators earn rewards from liquidated collateral after every progressive liquidation. Liquidators liquidate positions in an algorithmic
-fashion by looping through a list of accounts and finding those accounts whose health is deemed to be liquidateable. Then,
-they take over all of those derivatives positions which are unhealthy and liquidate them. After liquidating them, liquidators receive
-an asset at a discount as stated previously.
+Liquidators take over margin accounts(called as TRGs, learn more about trading accounts [here](/dex-concepts/trg)), and cancel any open orders,
+in an attempt to free up any margin that can be re-allocated to devaluing positions. In such a scenario, the user won't be able to place new orders
+until his account is in the clear and the risky positions are now provided with enough buffer margin.
 
-Please do note that liquidators also need to have TRGs setup and most have sufficient collateral in order to satisfy the initial margin
-requirements of the inherited liabilities(liquidated positions). Also, liquidations always happen at the Oracle Price and not at the Mark Price
-in order to prevent false and wacky prices being used to liquidate users.
+But, if the freed up margin from cancelling open orders still does not qualify the thresholds for maintenance margin, the position is opened up for
+liquidation. Liquidators can call a specific liquidate instruction, which when successful is followed by a transfer of a set amount of assets and liabilities
+from the liquidatee to the liquidator. The liquidator then progressively liquidates all liabilities in order to cover up for lack of margin. Any remaining
+collateral remains with the trader.
 
-If the liquidator is not able to handle the size of the liabilities, i.e he does not have sufficient margin, the positions are declared
-to be bankrupt and the [Insurance Fund](/dex-concepts/insurance-fund) takes over them.
+The maintenance margin confiscated by the liquidator is not returned back to the trader. This is done in order to ensure minimum levels of profitability
+and incentives for people to run liquidators. Liquidators get to keep the maintenance margin transferred from the liquidatee as a reward for liquidating,
+and keeping the protocol debt-free.
+
+Liquidators may also run advanced strategies in order to minimize the slippage while liquidating liabilities and ensure minimum acceptable capital
+after liquidations that can be used to re-collateralize the liquidator. Please be aware that liquidators also need to put up margin in order to meet the margin
+requirements of the thus acquired leverage.
+
+## How to run a liquidator?
+
+Please go over this open-source implementation of a liquidator client implemented by us [here](https://github.com/spedx-io/liquidator-client)
