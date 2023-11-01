@@ -1,6 +1,6 @@
 {
     "orderbook": "Orderbook",
-    "instruments": "instruments",
+    "Instruments": "instruments",
     "mpg": "MPG", 
     "trg": "TRG",
     "margining": "Margining",
