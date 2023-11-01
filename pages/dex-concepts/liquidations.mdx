@@ -3,12 +3,12 @@
 Liquidations on HxroNetwork / SpedX work similar to other exchanges and are tied to margin. Hxro Network determines health of an account
 using the following three ways:
 
-- If the margin required for the position is above the threshold of `3 _ 1d_standard_deviation _ order_size\*, the account is considered to be
+- If the margin required for the position is above the threshold of `3 * 1d_standard_deviation * order_size`, the account is considered to be
   extremely healthy.
-- If the margin required for the position is exactly at the of `3 _ 1d_standard_deviation _ order_size\*, the account is considered to be
+- If the margin required for the position is exactly at the of `3 * 1d_standard_deviation * order_size`, the account is considered to be
   healthy.
-- If the margin required for the position is below the threshold of `3 * 1d_standard_deviation * order_size*, but above the threshold of
-`3/2 _ 1d_standard_deviation _ order_size`, the account is considered to be unhealthy.
+- If the margin required for the position is below the threshold of `3 * 1d_standard_deviation * order_size`, but above the threshold of
+  `3/2 * 1d_standard_deviation * order_size`, the account is considered to be unhealthy.
 - If the margin required for the position is below the threshold of `3/2 * 1d_standard_deviation * order_size`, the account is considered to be
   liquidateable.
 
