@@ -4,68 +4,38 @@
 
 SpedX is a DEX being built on Solana that focuses on offering optimal liquidity, execution and best-in-class UX to it's traders.
 
-## Why?
-
-Imagine a scenario, you are a shitcoin trader on Ethereum, trading popular coins like $LINK, $WLD, $RLB, $LDO, etc on EVM DEXs.
-One day, a big NFT mint happens on the L1. Gas prices skyrocket. Even L2s feel the effect. At the same time, you spot a winning trade
-in a shitcoin. But the gas price is more than the notional value of your trade. You miss out on an obvious and money-making trade.
-
-We all have been through this experience. All of us, at some point in our lives have traded, or trade shitcoins. However, the inability of
-the EVM to facilitate smooth trading experiences acts as a limiting factor.
-
-Another problem is lack of consistent liquidity. Market makers typically hesitate to provide liquidity to derivatives of shitcoins, mainly
-due to non-uniform settlement. In perpetuals, settlement is not uniform, meaning that some people are left holding the bags at the last. Expiry future
-markets are not yet widely used in crypto, mainly due to the added complexity of long-term uncertain speculation.
-
-One could say that bridging of shitcoins to faster chains like Solana could be a solution. But, bridging is an extremely time consuming and expensive process.
-Bridges also have a history of exploits mainly due to the wrapping of assets. Speeding up the bridging process involves a certain level of centralization
-which is against the basic premise of blockchains, which is trust minimization.
-
-Lastly, even if one was to bridge their favorite shitcoins to faster chains like Solana and were to find a market for it,
-bad actors in the markets tend to manipulate the prices of perpetual contracts of illiquid shitcoins, and then farm funding rate rewards.
-This causes a disparity and inefficiency in the market where the Mark Price tends to be wacky most of the time, and traders are forced to trade at
-inefficient prices.
-
 ## What?
 
-Thus, to solve the problem of slow and expensive chains, time-consuming bridging process, lack of market makers for liquidity and presence
-of bad actors manipulating thin markets, we are bringing forth a new instrument, known as Zero-day Futures that enable short-term, liquid margin trading
-of shitcoins, without the actual asset being on the chain itself, with no funding rates, and the contract design acting as an incentive to market makers.
+SpedX is a DEX focusing on four things: optimal liquidity, the right set of incentives, increased capital efficiency and best-in-class UX.
+We're building on the learnings accumulated by our team by trading on decentralized venues. We're bringing forth an asset-agnostic orderbook,
+powered by HxroNetwork, coupled with a market maker to add liquidity to the orderbook in a continuous fashion.
 
-ZDFs portray the following features:
+## Why?
 
-- Enable short-term liquid margin trading of any underlying asset.
-- All ZDF contracts expire every 25 hours.
-- 24 hours is meant for trading, and the additional 1 hour is for settlement of contracts
-- There is no funding rate as all contracts settle to Index Price at expiry.
-- No bridging is required, as margin is paid and contracts settle in USDC.
+As traders, we feel the pain of getting slipped numerous times while trading on Orderbooks. The principle reason for slippage is lack of liquidity
+on Orderbooks. Liquidity on Orderbooks is mainly supplied by Market Makers. Market Makers are that segment of a market that post bids and asks
+on both sides of the book and establish liquidity in the market, allowing anyone to buy and sell various quantities of assets at the price they desire.
+DeFi and specifically on-chain derivatives exchanges lack market making activity mainly because market makers are reluctant to provide liquidity due to
+smart contract risks, economic risks, lack of understanding of blockchain tech, and mainly, lack of volume in decentralized markets.
 
-Advantages of ZDFs for Traders are:
+Market Makers desire volume before deploying liquidity. Traders, who bring the volume, desire liquidity before trading. Thus, it's a chicken and egg problem,
+that is pretty tough to solve. Following this, pretty interesting models of exchanges have popped up. GMX is the best example by a mile.
+GMX uses a liquidity pool rather than an orderbook as the main trading avenue. Traders are allowed to open positions against the liquidity pool,
+and the liquidity pool fully collateralizes these positions using the liquidiy in the pool itself. However, such implementations have a few flaws:
 
-- No funding rate
-- No bridging requirement
-- Ability to access leverage by posting collateral
-- Despite manipulation risks, they incur guaranteed cash settlement at index price.
+- Models like GMX survive on a thin rope called fees. Because the pool always takes the opposite position as traders, any profit for the pool is derived off
+  of traders making losses on their positions. However, when traders make profit, the pool looses heavily. In order to make up for this and offer LPs
+  a competitive yield on their liquidity, GMX implements a fee model that charges traders orders of magnitude higher than orderbooks.
+- There is no backstop liquidity source for pool-to-peer models, as they are meant to be "the" source of liquidity. In orderbooks, market makers
+  themselves are the backstop liquidity source, and models like Drift implement a native vAMM as the Backstop Liquidity Source.
+- Funding rates can be badly understood. Funding rates in Orderbooks are a function of the deviation between the mark price and the index price.
+  However, in a liquidity pool model, funding rates are a function of the inventory skew held by the liquidity pool. This makes funding
+  rates incrediblt predictable and incredibly volatile in the case of poorly managed inventory and sub-park risk management.
 
-Advantages of ZDFs for Market Makers are:
+## How?
 
-- Ability to manage risk using advanced measures
-- Guaranteed settlement ensuring that they are not left with the bags at the end
-- Flexibility to settle to cash or roll over to the next contract depending on risks
-- Provide liquidity to the long tail of assets by leveraging at-the-money futures
+We leverage Hxro Network's Derivatives infrastructure to power trading of different instruments. Upon this, we embed an off-chain market maker to provide
+liquidity to the orderbooks. The orderbook acts as the main trading avenue, whereas the market maker acts as a liquidity source by adding liquidity to the orderbook.
 
-### Important Information
-
-ZDFs are the brainchilds of HxroNetwork. SpedX is a Hxro Ecosystem dApp and leverages its derivatives infrastructure to power ZDF trading.
-
-## Which ZDFs will be listed first?
-
-We are currently planning to list contracts for the following underlying assets:
-
-- FTT (Yes, you saw it right)
-- LUNA (Yes, you saw it right)
-- LDO
-- GMX
-- LINK
-- WLD
-- BITCOIN
+- More on the orderbook and the trading infrastructure can be found [here](/dex-concepts/)
+- More on the market maker can be found [here](/market-maker)

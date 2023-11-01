@@ -1,8 +1,4 @@
 {
-    "price-and-spread-generation": "Price and Spread Generation",
-    "position-and-risk-management": "Position and Risk Management",
-    "inventory-management": "Inventory Management",
-    "order-creation-and-updation": "Order Creation and Updation",
-    "position-settlement": "Position Settlement",
-    "funding-rate": "Funding Rate"
+   "introduction": "Introduction",
+   "how-to-participate": "How to Participate"
 }

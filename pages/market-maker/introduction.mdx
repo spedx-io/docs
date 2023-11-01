@@ -1,0 +1,85 @@
+# Introduction
+
+SpedX will be running it's native market maker to provide liquidity on the orderbooks. Although it might seem simple, it has a few unique
+properties we're excited about
+
+- Bootstrap liquidity on our / HxroNetwork's books.
+- Make orderbooks great again, with increased liquidity and execution capacity.
+- Allowing a layman user to market make on derivatives orderbooks without significant knowledge via Vaults.
+- Eliminate Impermanent Loss for depositors with well thought out pricing and spread models.
+- Enables advanced risk management via hedging, funding arbitrage, high-fidelity order updation and cancellation.
+- Additionally, the portfolio-based cross margining system of HxroNetwork further boosts the capital efficiency.
+- If successful, the market maker can be ported to other derivatives platforms, leveraging our partnerships with Zeta Markets and Goose FX.
+
+# Properties of the Market Maker
+
+## Primary Pricing and Volatility Models
+
+In this model, we make use of candles of a specific period, say 15 min, for example, for 14 consecutive periods, in order to determine
+a range in which the price was observed to be in the 14 15-min periods. This acts as a method of determining variance of the price over a given time period.
+The time period is extremely crucial here, as we do not want to end up taking a small enough time frame that may over-represent volatility, nor do we want to take
+a large enough time frame that may under-represent intraday volatility. Thus, we use a strip of timeframes that are designed to consider intra-hour,
+intra-day and inter-day variances.
+
+Using this estimation of variance / volatility, we also calculate our reservation price. Our reservation is a linear-volume-inverse-confidence-weighted-average-price.
+This can be a mouthful, let's break it down. Our pricing engine aggregates prices from various sources, including Centralized as well as Decentralized Exchanges.
+Then, it applies weights to each of these prices according to the volume done and the variance of the price offered by the exchange.
+
+### Drawback of candlestick-based variance
+
+The main drawback of candlestick-based variance systems is that they are not extenisble for determining variance of precise timeframes.
+Using traditional forms of determining variance, such as Standard Deviations(we'll get to this later in this page), allows for determining
+variance of sufficiently large timeframes without ignoring intraday variance, i.e they can be extrapolated to various timeframes.
+
+Candlestick ranges limit this, as data, i.e candlestick data used to calculate a true-range of a price over a 14 X-min period cannot be extended to
+calculate a true-range of the same price over a 14 Y-min period, wherein X & Y are different timeframes, like 15 minutes and a year.
+
+## Secondary pricing and volatility model
+
+This model acts as a sidekick, yet an independent model of arriving at variance and the reservation price. Here, the reservation price is simple,
+it's a median of a dataset of all of the aggregated prices from the various data sources. A crucial detail to make note of here is that the dataset is not
+simply just a dataset of current prices offered by various exchanges, but for every price obtained from a source, there are two separate prices, representing
+the price minus and the price plus the candlestick variance divided by half. This subtle yet simple change allows the secondary pricing engine to be
+cognisant of the varying levels of accuracy of the prices aggregated from various data sources.
+
+The variance is a derivative of traditional variance models, and uses standard devations to arrive at variance. Like candlestick-based variance,
+the Standard Devation too must be modelled to neither under-represent volatility, nor over-represent volatility. In practical sense, it is always better to
+over-represent variance and quote wider, than under-representing variance and quoting tighter. The best example for this is EVM-based CEX-DEX arbitrage by
+HFT block-builders. They are able to observe changes in Centralized markets and react to them in Decentralized markets faster than on-chain market makers,
+who would have quoted tighter previously in their stale quotes. The end result is then obvious -- market makers get selectively picked off.
+That is why, it's important to consider intraday variance, as well as interday variance, even in standard devations, along with combining variances of different
+sources to arrive at a market-neutral variance, that is cognisant of Centralized market conditions, as well as Decentralized market conditions.
+
+## Quoting on Orderbooks
+
+The market maker would be quoting on derivatives orderbooks, such as SpedX / HxroNetwork and Zeta Markets. The market maker quotes at asymmetrical
+spreads around the bid-ask spread and updates its quotes in an extremely frequent manner, such that it never misses minor price movements, as well as increased
+in order-flow imbalance / variance, etc. The level of asymmetry of the spreads depends upon the levels of order-flow imbalance of the market.
+
+## Capital Efficiency and Inventory Management
+
+The market maker tries to strike a right balance between it's longs and shorts for two reasons: increased capital efficiency and low-risk profile of the entire portfolio.
+Having a tight balance of longs and shorts means that the margining system, which looks at the portfolio as a whole, tends to make lesser initial margin requirements for new positions
+as the portfolio is balanced, and has a very low delta profile. This leads to increased capital efficiency as sufficiently large positions can be opened at sufficiently low
+initial margin requirements. This can also be applied to a very balanced and near-zero-delta portfolio, wherein all shorts offset longs, allowing the market maker to artificially hedge in the same
+instrument itself.
+
+## Liquidations and Funding Rate Exposure
+
+The market maker separately runs a liquidation strategy along with it's set of market making strategies. The liquidation is simple, yet a bit complex.
+The idea is to liquidate positions with insufficient margin, in return for a part of the collateral of the liquidatee. The way liquidations work in HxroNetwork,
+as specified in [Liqudations](/dex-concepts/liquidations), positions with maintenance margin level below the threshold of
+`1.5 * 1d_standard_deviation * order_size` is opened to be liquidated by liquidators. The liquidation price is set to
+`1 * 1d_standard_deviation * order_size`. So, liquidators theoretically get the difference between the maintenance margin threshold
+and the liquidation price as the reward, which is `0.5 * 1d_standard_deviation * order_size`. This value is arrived at without considering any slippage,
+that may affect the liquidation price and ultimately the collateral reward that the liquidator may make.
+
+Thus, the liquidator client run by SpedX takes into consideration orderbook depth as well as orderbook depth recovery times in order to time
+it's liquidations. Currently, we expect the liquidation capacity(measured by liquidation size and the time to liquidate it) to be extremely low
+as we deal with slippage and low orderbook depth. However, we see this situation to improve as our market maker progressively adds liquidity to the books,
+significantly improving the liquidation capacity of the liquidator.
+
+Funding rate is yet another critical problem that the market maker faces. In it's pursuit to have a well balanced portfolio for capital efficiency
+and drastically-reduced delta, it may end up paying as much as 20-30% of it's total APR in funding payments, thus reducing it's total APR by a lot.
+Thus, in order to tackle this, the market maker not only sets significantly short amount of times for settlement of positions(in the factor of minutes),
+but it also helps the market to achieve efficiency by arbitraging the funding rate and making back the theoretically lost APR.

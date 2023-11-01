@@ -1,9 +1,0 @@
-# Position Settlement
-
-We settle all open perpetuals positions periodically, in order to benefit from positive Unrealized PnL garnered from the positions.
-It is also in order to adapt to the changing market and not to hold any perpetual position for too long.
-
-The settlement interval varies perpetual to perpetual, as we take into account the volatility of a perpetual before deciding
-the interval at which it should be settled. Meaning that more stable markets such as BTC would receive a **slightly** longer
-settlement period compared to more volatile altcoins. The max settlement interval any market can receive is roughly 5-8 minutes
-and there is no minimum number(Technically, the minimum number is the speed of the Solana blockchain itself).

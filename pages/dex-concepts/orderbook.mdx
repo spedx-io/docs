@@ -6,11 +6,12 @@ as a MPG(see [MPG](/dex-concepts/mpg)) on HxroNetwork.
 
 ## What kind of aseets can one issue on HxroNetwork?
 
-The aim of HxroNetwork is making listing of MPGs and ultimately new markets fully permissionless. The only requirement for listing
-a new market is the presence of an oracle(Pyth Network, Switchboard or Custom) fetching the Index Price for a market.
+HxroNetwork exposes an asset agnostic orderbook, that can support trading of any asset, as long as there is an oracle provider providing
+a constant stream of prices of that asset. For this purpose, we use Pyth and Switchboard oracles(see [Oracles](/dex-concepts/oracles) for more information).
 
-Even assets such as forex and commodity derivatives can be issued on HxroNetwork thanks to it's Asset Agnostic Orderbook provided there
-is an oracle providing constant price updates for the underlying asset.
+We've already started listing altcoin derivatives in the form of ZDFs, and are extremely excited to list more famous and widely accepted assets such as stocks,
+commodities, forex and even indices(Imagine the S&P 500 on-chain). And using HxroNetwork's unique [Margining](/dex-concepts/margining) engine, we're not only able to list a wide variety of assets,
+but also sustainably support them.
 
 ## What is Aggregated Liquidity?
 
