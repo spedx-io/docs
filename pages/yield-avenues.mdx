@@ -1,39 +1,44 @@
 # SpedX Yield Avenues
 
-SpedX will be utilizing a bunch of yield avenues, in order to attract idle liquidity that typically rests on AMMs.
-The main idea is for the users to deposit into initiatives such as the [Market Maker](/market-maker), [Liquidator Client](/dex-concepts/liquidators) and the [Insurance Fund](/dex-concepts/insurance-fund)
-and capture yield according to their pro-rata share in the total pool.
+The main idea of the SpedX Market Maker is not only to improve liquidity on orderbooks, but also enable a layman user to provide graded liquidity
+on Orderbooks, without actually having sufficient knowledge of the processes. Furthering this, users will be able to deposit into the market maker
+to participate in market making activities on SpedX / HxroNetwork via a Vault-based system. Let's dive into the details
 
-## How do Yield Avenues work?
+## Making a deposit
 
-Users can access Yield avenues, which in simpler terms can be thought of as capital vaults run and maintained by SpedX, from the SpedX UI itself.
-To access yield avenues and deposit liquidity, head over to [zdfs.spedx.exchange/yield](zdfs.spedx.exchange/yield). Choose the specific
-vault that you want to deposit to[Work-In-Progress, not live yet], connect your wallet, select the desired amount and click on deposit.
-That amount is then deposited to the respective vault, and the protocol on the backend records your pro-rata share of the vault as well as
-the profit growth(which initially is nil).
+When the market maker goes live for the public, we will expose an interface via our UI enabling direct deposits into the market maker's inventory.
+Meaning that, the market maker will utilize funds from this vault to market make on the orderbooks directly. Initially, users will only be able to make a
+deposit using $USDC, which is the protocol's margining and PnL-payoff token. However, as HxroNetwork progressively adds cross-collateral mechanisms, users can deposit
+to the market maker using a variety of token choices.
 
-## How does profit distribution work?
+## APR Specifications
 
-Users receive a share of the profit according to their pro-rata share of the vault. When they try to withdraw their funds, they receive the initial principal
-amount + any profit made or loss incurred. When they deposit initially, the profit growth would be nil. Proceeding that, the underlying algorithm
-utilizes the newly deposited funds for the activity it performs(market making, liquidating or insuring collateral). Results from these activities
-whether profit or loss is reflected in the UI. The underlying algorithms tend to recycle the profit made from operations, so the profit growth is compounded
-by definition. The APR/APY shown in the UI represents the profit growth obtained by the algorithm in it's operations. Note that profit growth
-can be either negative or positive, depending on the strategy, risk, and the market condition that the algorithm is operating in.
+We want to make depositing into the vault as seamless as possible, all the while maintaining transparency. Depositors will be able to see live APR provided by the market maker,
+as well as it's tick-by-tick activity information, such as Active Positions, Active Orders, Funding Payments, Funding Receipts, Available Margin, etc, all via the Vault UI.
+Please do note that APR is always fluctuating and can be negative, unlike traditional AMM mechanisms, where constant fees guarantee some form of return.
+However, unlike AMMs, the SpedX market maker experiences near-zero Impermanent Loss due to it's cross-venue cognisance as well as low-latency
+trading mechanism.
 
-## Insurance Fund -- The Exception
+## Withdrawals
 
-One of the yield avenues that SpedX exposes a protocol-run vault is the Insurance Fund. In short, the SpedX Insurance Fund covers
-collateral / bad debts of positions that otherwise could not be liquidated / covered by liquidators. Thus, it makes sure that all positions
-remain fully backed / covered.
+Users are able to withdraw their full deposited capital +- any profit/loss made by the market maker using the user's capital at any point in time.
+In the case of losses, the users get back less than their deposited capital, as the user's capital was used to pay-off losses according to the pro-rata share
+of the user in the vault in terms of total capital. In the case of the profit, the users get back more than their deposited capital, as the market maker proceeds to settle
+it's profitable trades using which it pays-off users based on their pro-rata share of the vault.
 
-But, it is worth to notice that the Insurance Fund by definition does not make money from it's operations. So you might ask, how does it
-pay its depositors? Depositors depositing into the Insurance Fund vault get a share of the fees collected by SpedX from it's exchange activities.
-Currently, SpedX charges 0bps for maker orders and 5bps for taker orders(see [Fees](/dex-concepts/fees) for more information), all of which flows to HxroNetwork
-and $HXRO stakers. Additionally, we will implement a fee(1-2bps, see [Fees](/dex-concepts/fees) for more information) on top of the base taker
-fee which will flow to SpedX, using which we will fund Insurance Fund yield payoffs.
+## transparency
 
-For more details on the Insurance Fund and the risks associated to depositing in that specific yield avenue, check out
-[Insurance Fund](/dex-concepts/insurance-fund).
+As stated before, the market maker will be fully transparent from the ground-up. Depositors as well as non-depositors can observe the operations of the market maker,
+that is fully algorithmic. Important statuses such as Active Positions, Active Orders, etc, across markets and instruments can be observed from a single terminal.
+Users can even view the on-chain data of each specific information, if need be.
 
 For permissionless creation of Yield Avenues, check out [Trading Vaults](/trading-vaults)
+
+# Liquidator Yield Avenues
+
+Alongside market making, SpedX will also be running a public liquidator client to de-leverage positions. As in market making wherein deposited capital
+is used to post margin and/or settle any potential losses, the deposited capital in a liquidator vault would be used to post margin, that is a pre-cursor to liquidating.
+As also in market making, wherein the major risk is the market moving on the other side of your positions, one of the major risks in liquidations is slippage,
+that can potentially decrease the collateral reward provided to the liquidator by the protocol for liquidating the liquidatee.
+For exact calculations and functioning of liquidators and liquidations, please refer to [Liquidations](/dex-concepts/liquidations),
+[Liquidators](/dex-concepts/liquidators) and [Market Making](/market-maker/introduction)
