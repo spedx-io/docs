@@ -12,14 +12,14 @@ using the following three ways:
 - If the margin required for the position is below the threshold of `3/2 * 1d_standard_deviation * order_size`, the account is considered to be
   liquidateable.
 
-When the margin levels of an account dips below the `3/2 _ 1d_standard_deviation _ order_size\*, the account is open for liquidation by liquidators.
+When the margin levels of an account dips below the `3/2 * 1d_standard_deviation * order_size`, the account is open for liquidation by liquidators.
 Here is what may happen to your account once it is open for liquidation.
 
 - If you have any open orders, they will be cancelled first. This ensures that any margin taken up by these set of orders is freed up and re-used for
   the liquidateable positions, thus potentially preventing them from getting liquidated. Please do note that you will not be able to send any more orders
   during this process that may take up more margin thus increasing the risk of liquidation even further. You are able to send new orders again
   once open orders have been cancelled and freed up margin has been added to liquidateable positions.
-- However, if the margin is still below the maintenance margin requirements of the user's postiions, positions are eligible to be liquidated
+- However, if the margin is still below the maintenance margin requirements of the user's positions, positions are eligible to be liquidated
   by liquidators by sending a liquidation instruction. Learn more on how Liquidators function [here](/dex-concepts/liquidators). Liquidators specify
   a specific TRG to liquidate, the market and the size to be liquidated. Upon a successful execution of the liquidate instruction, the liquidator will trade
   with the liquidatee the positions to liquidate, at the _Index Price_ of the market at the time. For liquidating, the liquidator receives a fixed % of the
