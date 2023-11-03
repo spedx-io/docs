@@ -622,7 +622,7 @@ export default {
       />
       <meta
         property="og:image"
-        content="/public/spedx-logo-2.png"
+        content="https://docs.spedx.exchange/spedx-logo-2.png"
       />
       <title>SpedX Docs</title>
 
