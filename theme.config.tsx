@@ -618,7 +618,7 @@ export default {
       <meta property="og:title" content="SpedX" />
       <meta
         property="og:description"
-        content="SpedX is a DEX focusing on liquidity, execution and UX."
+        content="SpedX is a Hybrid Orderbook-MM Exchange on Solana to trade Perpetuals and ZDFs with maximal capital efficiency."
       />
       <meta
         property="og:image"
@@ -638,12 +638,12 @@ export default {
       />
       <meta
         name="twitter:description"
-        content="SpedX is a DEX focusing on liquidity, execution and UX."
+        content="SpedX is a Hybrid Orderbook-MM Exchange on Solana to trade Perpetuals and ZDFs with maximal capital efficiency."
       />
-      <meta name="twitter:card" content="summary_large_image"></meta>
+      <meta name="twitter:card" content="summary" />
       <meta
         property="og:description"
-        content="SpedX is a DEX focusing on liquidity, execution and UX."
+        content="SpedX is a Hybrid Orderbook-MM Exchange on Solana to trade Perpetuals and ZDFs with maximal capital efficiency."
       />
     </>
   ),
@@ -665,7 +665,7 @@ export default {
         { content: "/ms-icon-144x144.png", name: "msapplication-TileImage" },
       ],
       description:
-        "SpedX is a DEX focusing on liquidity, execution and UX.",
+        "SpedX is a Hybrid Orderbook-MM Exchange on Solana to trade Perpetuals and ZDFs with maximal capital efficiency",
       openGraph: {
         images: [
           {

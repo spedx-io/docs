@@ -1,7 +1,17 @@
 # Fees
 
-Fees on SpedX are currently the same as the fees charged by the base layer, i.e HxroNetwork, mainly due to the fact that Insurance funds
-have not been unveiled yet.
+Fees on SpedX are currently the same as the fees charged by the base layer, i.e HxroNetwork, mainly due to the fact that SpedX is currently in a testing phase
+and intends fees to be as low as possible. However, in the future, we are looking at a potential volume-and-account-stats-based fee determination system.
+This sytem works in the following ways:
+
+- SpedX will implement an additional fee over the base fee of 5bps. This additional fee will be **UP TO** 3bps. So, theoretically,
+  the maximum fee that a trader can be charged is 8bps.
+- The amount of fee charged depends on the volume traded by the user and his account activity. The fee engine prefers those accounts for
+  fee discounts that are either new to the platform, or are trading actively on the platform.
+- In order to encourage and onboard new traders onto the platform, the fees are kept incredibly low. Likewise, in order to retain
+  existing traders on the platform, who have been trading and using the platform consistently, fees are reduced for them too. The middle ground,
+  which consists of traders that have started trading on the platform, but are not consistent yet, are the ones that bear the fees relatively.
+- This is an effective strategy to onboard new users, retain the older ones, and weed out the remaining.
 
 Fees for maker orders are nil, i.e 0bps
 Whereas fees for taker orders are 5 bps.

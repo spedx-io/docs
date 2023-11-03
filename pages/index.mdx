@@ -21,7 +21,7 @@ smart contract risks, economic risks, lack of understanding of blockchain tech, 
 Market Makers desire volume before deploying liquidity. Traders, who bring the volume, desire liquidity before trading. Thus, it's a chicken and egg problem,
 that is pretty tough to solve. Following this, pretty interesting models of exchanges have popped up. GMX is the best example by a mile.
 GMX uses a liquidity pool rather than an orderbook as the main trading avenue. Traders are allowed to open positions against the liquidity pool,
-and the liquidity pool fully collateralizes these positions using the liquidiy in the pool itself. However, such implementations have a few flaws:
+and the liquidity pool fully collateralizes these positions using the liquidity in the pool itself. However, such implementations have a few flaws:
 
 - Models like GMX survive on a thin rope called fees. Because the pool always takes the opposite position as traders, any profit for the pool is derived off
   of traders making losses on their positions. However, when traders make profit, the pool looses heavily. In order to make up for this and offer LPs
@@ -30,7 +30,7 @@ and the liquidity pool fully collateralizes these positions using the liquidiy i
   themselves are the backstop liquidity source, and models like Drift implement a native vAMM as the Backstop Liquidity Source.
 - Funding rates can be badly understood. Funding rates in Orderbooks are a function of the deviation between the mark price and the index price.
   However, in a liquidity pool model, funding rates are a function of the inventory skew held by the liquidity pool. This makes funding
-  rates incrediblt predictable and incredibly volatile in the case of poorly managed inventory and sub-park risk management.
+  rates incredibly predictable and incredibly volatile in the case of poorly managed inventory and sub-park risk management.
 
 ## How?
 
