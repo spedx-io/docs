@@ -630,7 +630,7 @@ export default {
 
       <meta property="og:type" content="website" />
       <meta name="twitter:site" content="@spedxhq" />
-      <meta name="twitter:title" content="Spedx Docs" />
+      <meta name="twitter:title" content="SpedX Docs" />
       <meta name="twitter:creator" content="@spedxhq" />
       <meta
         name="twitter:image"
