@@ -634,7 +634,7 @@ export default {
       <meta name="twitter:creator" content="@spedxhq" />
       <meta
         name="twitter:image"
-        content="/public/spedx-logo-2.png"
+        content="https://docs.spedx.exchange/spedx-logo-2.png"
       />
       <meta
         name="twitter:description"
