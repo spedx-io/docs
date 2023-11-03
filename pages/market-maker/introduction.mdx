@@ -68,7 +68,7 @@ instrument itself.
 
 The market maker separately runs a liquidation strategy along with it's set of market making strategies. The liquidation is simple, yet a bit complex.
 The idea is to liquidate positions with insufficient margin, in return for a part of the collateral of the liquidatee. The way liquidations work in HxroNetwork,
-as specified in [Liqudations](/dex-concepts/liquidations), positions with maintenance margin level below the threshold of
+as specified in [Liquidations](/dex-concepts/liquidations), positions with maintenance margin level below the threshold of
 `1.5 * 1d_standard_deviation * order_size` is opened to be liquidated by liquidators. The liquidation price is set to
 `1 * 1d_standard_deviation * order_size`. So, liquidators theoretically get the difference between the maintenance margin threshold
 and the liquidation price as the reward, which is `0.5 * 1d_standard_deviation * order_size`. This value is arrived at without considering any slippage,

@@ -640,7 +640,7 @@ export default {
         name="twitter:description"
         content="SpedX is a Hybrid Orderbook-MM Exchange on Solana to trade Perpetuals and ZDFs with maximal capital efficiency."
       />
-      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:card" content="summary_large_image" />
       <meta
         property="og:description"
         content="SpedX is a Hybrid Orderbook-MM Exchange on Solana to trade Perpetuals and ZDFs with maximal capital efficiency."
