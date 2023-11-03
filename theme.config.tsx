@@ -622,7 +622,7 @@ export default {
       />
       <meta
         property="og:image"
-        content="https://docs.spedx.exchange/spedx-logo-2.png"
+        content="https://docs.spedx.exchange/banner.jpg"
       />
       <title>SpedX Docs</title>
 
@@ -634,7 +634,7 @@ export default {
       <meta name="twitter:creator" content="@spedxhq" />
       <meta
         name="twitter:image"
-        content="https://docs.spedx.exchange/spedx-logo-2.png"
+        content="https://docs.spedx.exchange/banner.jpg"
       />
       <meta
         name="twitter:description"
