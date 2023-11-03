@@ -652,7 +652,7 @@ export default {
     return {
       additionalLinkTags: [
         {
-          href: "/public/spedx-logo-2.png",
+          href: "/public/banner.jpg",
           rel: "icon",
           sizes: "192x192",
           type: "image/png",
@@ -669,7 +669,7 @@ export default {
       openGraph: {
         images: [
           {
-            url: "/spedx-logo-2.png",
+            url: "/banner.jpg",
           },
         ],
       },
